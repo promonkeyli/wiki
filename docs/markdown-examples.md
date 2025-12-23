@@ -22,6 +22,15 @@ export default {
 
 **Output**
 
+
+121
+21
+21
+2
+1
+21
+
+
 ```js{4}
 export default {
   data () {
