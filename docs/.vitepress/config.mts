@@ -71,7 +71,7 @@ export default defineConfig({
           collapsed: false,
           items: [
               {
-                  text: '概述', link: "/backend/go"
+                  text: '概述', link: "/backend/go/index"
               },
               {
                   text: "基础", link: "/backend/go/basic"

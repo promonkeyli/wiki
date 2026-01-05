@@ -1,6 +1,8 @@
 ---
 title: golang概述
-editLink: true
+next:
+  text: '基础'
+  link: '/backend/go/basic'
 ---
 
 # 前言
@@ -63,11 +65,7 @@ go version
 :::tip
 由于网络原因，在国内下载依赖包（Go Modules）会很慢或失败，强烈建议开启代理：
 :::
-1. 开启Go Modules模式
-```bash
-go env -w GO111MODULE=on
-```
-2. 设置国内镜像(添加了direct后，代理源如果访问失败，会直接走官方源)
+* 设置国内镜像(添加了direct后，代理源如果访问失败，会兜底直接走官方源)
 ```bash
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
