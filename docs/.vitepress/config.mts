@@ -74,7 +74,14 @@ export default defineConfig({
                   text: '概述', link: "/backend/go/index"
               },
               {
-                  text: "基础", link: "/backend/go/basic"
+                  text: "基础",
+                  collapsed: true,
+                  items: [
+                    {
+                      text: "modules",
+                      link: "/backend/go/basic/modules"
+                    }
+                  ]
               }
           ]
         }

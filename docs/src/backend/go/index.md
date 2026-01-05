@@ -2,7 +2,7 @@
 title: golang概述
 next:
   text: '基础'
-  link: '/backend/go/basic'
+  link: '/backend/go/basic/modules'
 ---
 
 # 前言
