@@ -2,14 +2,17 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "wiki",
-  description: "A comprehensive full-stack knowledge base covering Frontend, Backend, DevOps, and Databases.",
+  title: "Wiki",
+  description: "A comprehensive full-stack knowledge base covering Frontend, Backend and DevOps.",
   srcDir: './src',
   lastUpdated: true,
+  head: [
+      ['link', { rel: 'icon', type: 'image/svg+xml', href: '/icons/logo.svg' }]
+  ],
   themeConfig: {
     nav: [
       { text: 'frontend', link: '/frontend' },
-      { text: 'backend', link: '/backend' },
+      { text: 'backend', link: '/backend/go' },
       { text: 'devops', link: '/devops' },
     ],
     footer: {
@@ -64,9 +67,16 @@ export default defineConfig({
       ],
       '/backend/': [
         {
-          text: 'go',
-          collapsed: true,
-          items: []
+          text: 'Golang',
+          collapsed: false,
+          items: [
+              {
+                  text: '概述', link: "/backend/go"
+              },
+              {
+                  text: "基础", link: "/backend/go/basic"
+              }
+          ]
         }
       ],
       '/devops/': [

@@ -1,0 +1,64 @@
+/**
+ * 极简森系 VitePress 配色方案
+ * (保持默认字体，保持白色背景)
+ */
+
+:root {
+    /* --- 1. 品牌色调整 (Accent Color) --- */
+    /* 使用鼠尾草绿作为所有的链接、按钮、图标高亮色 */
+    --vp-c-indigo-1: #829460;
+    --vp-c-indigo-2: #6D7E4F; /* 悬停色 */
+    --vp-c-indigo-3: #566441; /* 激活色 */
+    --vp-c-indigo-soft: rgba(130, 148, 96, 0.12);
+
+    --vp-c-brand-1: var(--vp-c-indigo-1);
+    --vp-c-brand-2: var(--vp-c-indigo-2);
+    --vp-c-brand-3: var(--vp-c-indigo-3);
+    --vp-c-brand-soft: var(--vp-c-indigo-soft);
+
+    /* --- 2. 背景色调整 (Backgrounds) --- */
+    /* 强制保持纯白背景 */
+    --vp-c-bg: #ffffff;
+    --vp-c-bg-alt: #f9faf7;  /* 侧边栏稍带一点点极淡的绿，增加层次感，也可改为 #ffffff */
+    --vp-c-bg-elv: #ffffff;
+    --vp-c-bg-soft: #f1f2eb;
+
+    /* --- 3. 文字色调整 (Text) --- */
+    /* 使用深橄榄灰替代纯黑，增加高级感和耐看度 */
+    --vp-c-text-1: #3A4750;  /* 正文文字 */
+    --vp-c-text-2: #606C76;  /* 辅助文字 */
+    --vp-c-text-3: #929295;
+
+    /* --- 4. 边框与线 (Borders) --- */
+    /* 使用浅豆沙绿/奶绿色作为分割线 */
+    --vp-c-divider: #E7E8DE;
+    --vp-c-border: #C0C0A1;
+    --vp-c-gutter: #E7E8DE;
+
+    /* --- 5. 特殊组件 --- */
+    /* 首页大标题颜色 */
+    --vp-home-hero-name-color: var(--vp-c-brand-1);
+    /* 代码块背景（稍微带一点森林调性的浅灰） */
+    --vp-code-bg: #f3f4ed;
+}
+
+/* --- 深色模式 (保留森系质感) --- */
+.dark {
+    /* 深色模式下背景设为深橄榄黑 */
+    --vp-c-bg: #1b1b1f;
+    --vp-c-bg-alt: #161618;
+
+    --vp-c-text-1: #dfdfd6;
+    --vp-c-text-2: #a8a89f;
+
+    --vp-c-brand-1: #A2B385; /* 深色下稍微调亮绿色，保证清晰度 */
+    --vp-c-brand-2: #C0C0A1;
+
+    --vp-c-divider: #2e2e32;
+    --vp-c-border: #3c3f44;
+}
+
+/* 如果你想让代码块里面的关键字也偏向森系调性，可以加上这段 */
+:root {
+    --vp-code-color: var(--vp-c-brand-1);
+}
