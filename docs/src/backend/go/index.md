@@ -31,7 +31,7 @@ echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zshrc
 source ~/.zshrc
 ```
 3. 验证
-```bash
+```zsh
 go version
 ```
 
@@ -67,7 +67,7 @@ go version
 ```bash
 go env -w GO111MODULE=on
 ```
-2. 设置国内镜像
+2. 设置国内镜像(添加了direct后，代理源如果访问失败，会直接走官方源)
 ```bash
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
