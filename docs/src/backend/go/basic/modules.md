@@ -2,7 +2,7 @@
 title: golang modules
 ---
 # Go Modules 
-go modules 是 Go 语言的官方依赖管理工具，自 Go 1.11 版本开始引入，在 Go 1.16 版本成为默认的依赖管理模式，下面是一些依赖管理相关的一些命令
+go modules 是 Go 语言的官方依赖管理工具，自 Go 1.11 版本开始引入，在 Go 1.16 版本成为默认的依赖管理模式，下面是一些依赖管理相关的一些命令以及规范
 
 ## go mod
 
@@ -222,3 +222,103 @@ admin-gin/
 | **缩写** | 专有名词缩写必须全大写或全小写 | `ServeHTTP` (Good), `ServeHttp` (Bad); `ID` (Good), `Id` (Bad) |
 | **接口 (Interface)** | 单方法接口以 `er` 结尾 | `Reader`, `Writer`, `Formatter` |
 | **Getter/Setter** | 读取器不加 Get 前缀 | `obj.Owner()` (Good), `obj.GetOwner()` (Bad) |
+
+## 包/变量引用
+
+### 包定义
+
+1. 声明：每个`.go`文件第一行必须是 `package <name>`
+2. 目录结构：每个文件夹目录下的所有`.go`文件都属于一个包
+3. main 包：`package main`是程序的入口包，编译后会生成可执行文件
+
+### 包引用：
+
+1. 使用`import`关键词进行导入
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello World")
+}
+```
+
+2. 引用方式
+
+* 分组引用
+
+```go
+import (
+	"fmt"
+	"math"
+)
+```
+
+* 别名引用：可能会存在相同名字的包名，这时可以使用别名进行导入
+
+```go
+import m "math"
+// 使用时：m.Sin(0)
+```
+
+* 匿名引用：仅执行包内的`init()`函数
+
+:::tip
+
+**Init 函数**：每个包可以包含多个 init() 函数，它们在包被引用时自动执行，且早于 main 函数。
+
+:::
+
+```go
+import _ "github.com/go-sql-driver/mysql"
+```
+
+* 点引用：不用跟包名，可以直接使用包内的函数或者变量（不推荐）
+
+```go
+package main
+
+import (
+	. "fmt"
+)
+
+func main() {
+	Println("Hello World")
+}
+```
+
+## 变量访问
+
+go中没有java中的`public`、`private`等关键字，主要通过`首字母大小写`决定可见性
+
+1. 导出：如果一个变量、函数、结构体或接口以**大写字母**开头，那么它可以被**外部包**访问
+2. 未导出：如果以**小写字母**开头，它只能在**同一个包内**访问（包内跨文件可见）
+
+示例：
+
+```go
+package utils
+
+// ExportedVar 大写开头，外部可见
+var ExportedVar = 100
+
+// internalVar 小写开头，仅 utils 包内可见
+var internalVar = 10
+
+// Add 大写开头，外部可调用
+func Add(a, b int) int {
+    return a + b
+}
+
+// secretCalculation 小写开头，仅内部使用
+func secretCalculation() {}
+
+// User 结构体及其导出字段
+type User struct {
+    Name string // 外部可见
+    age  int    // 外部不可见（私有）
+}
+```
+
