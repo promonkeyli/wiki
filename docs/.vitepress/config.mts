@@ -80,6 +80,10 @@ export default defineConfig({
                     {
                       text: "modules",
                       link: "/backend/go/basic/modules"
+                    },
+                    {
+                      text: "变量/常量",
+                      link: "/backend/go/basic/var"
                     }
                   ]
               }

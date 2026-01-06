@@ -1,7 +1,7 @@
 ---
 title: golang概述
 next:
-  text: '基础'
+  text: 'modules'
   link: '/backend/go/basic/modules'
 ---
 
