@@ -84,6 +84,10 @@ export default defineConfig({
                     {
                       text: "变量/常量",
                       link: "/backend/go/basic/var"
+                    },
+                    {
+                      text: "输入输出",
+                      link: "/backend/go/basic/io"
                     }
                   ]
               }

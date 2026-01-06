@@ -1,7 +1,7 @@
 ---
 title: golang 变量/常量
 ---
-# golang 变量/常量
+# Go 变量/常量
 
 ## 变量
 
