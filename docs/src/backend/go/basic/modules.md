@@ -118,6 +118,35 @@ go build
 go build -o app
 go build -o bin/app ./cmd/app
 ```
+## 其他命令
+```bash
+go list -m all              # 查看当前项目依赖列表
+go run main.go              # 运行单个文件
+go run ./cmd/server         # 运行目录下的 main 包
+go install                  # 编译并安装到 $GOPATH/bin 或 go env GOBIN
+
+go test                     # 运行测试
+go test -v                  # 显示详细信息
+go test ./...               # 递归运行所有测试
+go test -bench=.            # 运行基准测试（性能测试）
+
+go fmt ./...                # 格式化所有代码
+go vet ./...                # 静态分析，检查可能的错误
+go doc fmt.Println          # 查看某个函数/包的文档
+go env                      # 查看 Go 环境变量
+
+go clean -modcache          # 清理依赖缓存（GOPATH/pkg/mod）
+go clean -testcache         # 清理测试缓存
+
+# 其他
+go help                     # go常见命令查看
+go bug                      # go bug反馈
+go fix                      # api升级助手，旧的api使用该命令后自动进行升级
+go generate                 # 在源码里标记要执行的命令 → go generate 扫描注释并运行 → 自动生成代码文件
+go work                     # 管理多模块工作区，方便在本地同时开发多个 Go 模块，避免频繁写
+go tool                     # go tool 提供了底层的“专业工具箱”，用于调试、分析、编译细节
+go vet                      # Go 的静态检查工具，用来发现可能导致 bug 的代码，而不是格式问题
+```
 
 `跨平台构建`
 
@@ -145,3 +174,51 @@ mac（apple silicon）
 GOOS=darwin GOARCH=arm64 go build -o app
 ```
 
+## 项目结构
+
+golang 社区推崇的最佳实践：https://github.com/golang-standards/project-layout
+
+个人喜欢的项目结构
+```text
+admin-gin/
+├── api/                   # 接口定义层
+│   └── openapi/           # 存放 OpenAPI (Swagger) 接口规范文档
+├── cmd/                   # 项目入口（编译后的二进制文件从此开始）
+│   ├── migrate/           # 数据库迁移脚本/程序入口
+│   ├── openapi/           # 接口文档相关的生成工具入口
+│   └── server/            # 主服务入口（main 函数所在，启动 Web 服务）
+├── configs/               # 配置文件目录
+│   ├── config.example.yaml # 配置文件模板（不含敏感信息，提交给 Git）
+│   ├── config.go          # Go 代码：负责加载、解析配置文件到结构体中
+│   └── config.yaml        # 本地实际运行的配置文件（包含数据库密码等，通常不提交）
+├── docs/                  # 项目文档（设计文档、部署文档等）
+├── internal/              # 内部代码（核心业务逻辑，禁止被外部项目直接引用）
+│   ├── app/               # 业务逻辑应用层
+│   │   └── admin/         # 具体的后台管理业务模块
+│   ├── boot/              # 系统初始化/引导启动
+│   │   ├── app.go         # 负责初始化各种组件（DB、Redis 等）
+│   │   └── register.go    # 负责路由注册或服务注册逻辑
+│   └── pkg/               # 项目内部共享的工具包（通用但私有）
+│       ├── cookie/        # Cookie 操作封装
+│       ├── database/      # 数据库连接与初始化（MySQL, GORM 等）
+│       ├── http/          # HTTP 请求/响应的统一封装
+│       ├── jwt/           # JWT 用户鉴权逻辑
+│       ├── logger/        # 日志打印封装
+│       ├── middleware/    # Gin 中间件（如权限校验、日志记录、跨域等）
+│       └── uuid/          # ID 生成工具
+├── .gitignore             # Git 忽略文件配置
+├── go.mod                 # Go Modules 项目依赖管理文件
+├── go.sum                 # 依赖包版本锁定与安全校验文件
+├── Makefile               # 自动化编译/脚本执行工具
+└── README.md              # 项目介绍和运行说明
+```
+
+命名规范
+
+| 类型 | 规范 | 示例 |
+| :--- | :--- | :--- |
+| **包名 (Package)** | 简短、全小写、单数、避免下划线 | `net/http` (Good), `net_http` (Bad) |
+| **变量/常量** | CamelCase (驼峰)，首字母大小写控制权限 | `userCount`, `ExportedVar` |
+| **缩写** | 专有名词缩写必须全大写或全小写 | `ServeHTTP` (Good), `ServeHttp` (Bad); `ID` (Good), `Id` (Bad) |
+| **接口 (Interface)** | 单方法接口以 `er` 结尾 | `Reader`, `Writer`, `Formatter` |
+| **Getter/Setter** | 读取器不加 Get 前缀 | `obj.Owner()` (Good), `obj.GetOwner()` (Bad) |
