@@ -88,6 +88,10 @@ export default defineConfig({
                     {
                       text: "输入输出",
                       link: "/backend/go/basic/io"
+                    },
+                    {
+                      text: "数据类型",
+                      link: "/backend/go/basic/type"
                     }
                   ]
               }
