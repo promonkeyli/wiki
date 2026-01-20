@@ -154,8 +154,74 @@ fmt.Println(structData)
 ```
 
 ## 引用类型
+
+变量赋值或者函数传递时，修改内容会影响到原始数据，go中只有值传递
+
 ### 切片
+
+底层是对数组的封装，切片本身是一个很小的结构体，定义如下：
+
+```go
+type slice struct {
+    array unsafe.Pointer // 指向底层数组的指针
+    len   int            // 长度
+    cap   int            // 容量
+}
+
+s1 := []int{1, 2, 3}
+s2 := s1 // 只拷贝了长度容量指针
+s2[0] = 4
+
+fmt.Println(s1)
+fmt.Println(s2)
+// 输出:
+// [4 2 3]
+// [4 2 3]
+```
+
+* `len()`：切片长度
+
+```go
+s1 := []int{1, 2, 3}
+fmt.Println(len(s1)) // 输出：3
+```
+
+* `cap()`：切片容量
+
+```go
+s1 := []int{1, 2, 3}
+fmt.Println(cap(s1)) // 输出：3
+```
+
+* `append()`：添加元素
+
+```go
+```
+
+* 拷贝
+* 删除
+* 清空
+* 截取
+* 遍历
+* 判空
+
 ### 映射
+
+也称为哈希表，用于存储无序键值对
+
+```go
+var m1 map[string]int      // 已声明未初始化，不开辟空间
+fmt.Println(m1)            // 输出：map[]
+fmt.Println(m1 == nil)     // 输出：true
+fmt.Println(len(m1))       // 输出：0
+m2 := make(map[string]int) // make会开辟真实空间
+fmt.Println(m2)            // 输出：map[]
+fmt.Println(m2 == nil)     // false
+fmt.Println(len(m2))       // 输出：0
+```
+
+
+
 ### 通道
 ### 指针
 ### 函数
