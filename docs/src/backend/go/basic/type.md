@@ -157,7 +157,7 @@ fmt.Println(structData)
 
 变量赋值或者函数传递时，修改内容会影响到原始数据，go中只有值传递
 
-### 切片
+### 切片（slice）
 
 底层是对数组的封装，切片本身是一个很小的结构体，定义如下：
 
@@ -179,52 +179,276 @@ fmt.Println(s2)
 // [4 2 3]
 ```
 
-* `len()`：切片长度
+* `make([]T, len, cap)`：创建切片，与字面量创建区别：
+  * 字面量是声明 + 初始化值
+  * `make`声明结构 + 初始化0值
+
+
+* `len()`：获取切片长度
 
 ```go
 s1 := []int{1, 2, 3}
 fmt.Println(len(s1)) // 输出：3
 ```
 
-* `cap()`：切片容量
+* `cap()`：获取切片容量
 
 ```go
 s1 := []int{1, 2, 3}
 fmt.Println(cap(s1)) // 输出：3
 ```
 
-* `append()`：添加元素
+* `append()`：添加元素，必须接收返回值，扩容可能导致底层数组变更
 
 ```go
+s3 := make([]int, 0, 3)
+s4 := []int{4, 5, 6}
+s3 = append(s3, 1, 2, 3) // 追加
+fmt.Println(s3)          // 输出：[1 2 3]
+s3 = append(s3, s4...)   //切片展开追加
+fmt.Println(s3)          // 输出：[1 2 3 4 5 6]
 ```
 
-* 拷贝
-* 删除
-* 清空
-* 截取
-* 遍历
-* 判空
+* `copy`：源切片复制到目标切片
+  * copy 拷贝是直接按索引0开始覆盖，不扩容，不追加
+  * 拷贝数量是 `min(len(dst), len(src))`
 
-### 映射
+
+```go
+s5 := make([]int, 3, 5)
+s6 := []int{6, 7, 8, 9, 10}
+s5len := copy(s5, s6)      // s6 切片内容拷贝到 s5 切片中
+fmt.Println(s5, s5len, s6) // 输出：[6 7 8] 3 [6 7 8 9 10]
+```
+
+* `clear`：清空
+  * `Go 1.21+`支持
+  * `clear`将切片内的所有元素重置为零值，保持长度不变
+
+```go
+s7 := []int{1, 2, 3}
+fmt.Println(s7) // 输出： [1 2 3]
+clear(s7)
+fmt.Println(s7, len(s7)) // 输出：[0 0 0] 3
+```
+
+* 截取
+  * 切片截取不会拷贝数据
+  * 新切片、原切片共享底层数组
+  * 写操作可能会影响原数组
+
+```go
+s8 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+fmt.Println(s8)
+s9 := s8[1:5]    // 截取1-5的元素，包含下标1，不包含下标5
+fmt.Println(s9)  // [2 3 4 5]
+s10 := s8[:2]    // 截取0-2的元素，包含下标0，不包含下标2
+fmt.Println(s10) // [1 2]
+s11 := s8[2:]    // 截取2-最后的元素，包含下标2
+fmt.Println(s11) // [3 4 5 6 7 8 9 10]
+```
+
+* `slices` 标准库，`go 1.21+引入`
+
+  - **slices.Index(s, val)**: 查找元素，返回第一个匹配的索引；找不到返回 -1。
+  - **slices.Contains(s, val)**: 判断切片是否包含某个元素。
+
+  - **slices.Delete(s, i, j)**: 删除索引 i 到 j 之间的元素。
+
+  - **slices.Insert(s, i, val...)**: 在索引 i 处插入元素。
+
+  - **slices.Sort(s)**: 对切片进行原地升序排序。
+
+  - **slices.Reverse(s)**: 原地反转切片。
+
+  - **slices.Clone(s)**: 快速创建一个切片的副本（深拷贝底层数据）。
+
+  - **slices.Compact(s)**: 连续重复元素去重（类似 Unix 的 uniq）。
+
+  - **slices.Equal(s1, s2)**: 比较两个切片是否相等。
+
+### 映射（map）
 
 也称为哈希表，用于存储无序键值对
+
+* 字面量声明与初始化
+
 
 ```go
 var m1 map[string]int      // 已声明未初始化，不开辟空间
 fmt.Println(m1)            // 输出：map[]
 fmt.Println(m1 == nil)     // 输出：true
 fmt.Println(len(m1))       // 输出：0
+```
+
+  * `make` 声明与初始化
+
+```go
 m2 := make(map[string]int) // make会开辟真实空间
 fmt.Println(m2)            // 输出：map[]
 fmt.Println(m2 == nil)     // false
 fmt.Println(len(m2))       // 输出：0
 ```
 
+* 新增/修改
 
+```go
+m1 := map[string]any{
+	"name": "golang",
+	"type": "language",
+}
+m1["age"] = 20
+fmt.Println(m1) // map[age:20 name:golang type:language]
+```
 
-### 通道
-### 指针
-### 函数
+* 删除
+
+```go
+m := map[string]any{
+	"a": 1,
+	"b": 2,
+	"c": 3,
+}
+fmt.Println(m)
+delete(m, "a")
+fmt.Println(m)
+```
+
+* 遍历：map遍历是无序的，每次遍历的顺序可能不一样
+
+```go
+m := map[string]any{
+	"a": "a",
+	"b": "b",
+}
+for k, v := range m {
+	fmt.Println(k, v) // a a 或者 b b
+}
+```
+
+### 通道（channel）
+
+`channel`是连接多个Goroutine（Go 语言中的轻量级并发执行单元，由 Go runtime 调度，而不是由操作系统直接调度）的管道，是实现并发模型的核心，go的哲学是不要通过共享内存来通信，而是要通过通信来共享内存
+
+* 创建：使用`make`创建，必须指定类型
+
+```go
+ch := make(chan int) // 创建一个传递整数类型的无缓冲通道
+```
+
+* 通道类型：
+  * `无缓冲`：收发双方必须同时准备好，否则操作会阻塞
+  * `有缓冲`：缓冲区满时，发送才会阻塞，缓冲区空时，接收会阻塞
+
+```go
+ch1 := make(chan int) // 无缓冲
+ch2 := make(chan int,1) // 缓冲为1
+```
+
+### 指针（pointer）
+
+存储变量内存地址的变量
+
+* 取地址：`&`符号
+
+```go
+a := 1
+fmt.Printf("a的地址是：%p\n", &a)
+// 输出：a的地址是：0x14000106020
+```
+
+* 解引用：`*`符号，用于方法指针指向的具体值
+
+```go
+b := 6
+p := &b
+fmt.Println(*p) // 6
+*p = 1
+fmt.Println(b) // 1
+```
+
+* 空指针：指针声明没有赋值，默认值是`nil`
+
+### 函数（func）
+
+go中函数是一等功名，可以像普通变量一样声明、赋值，传递
+
+* 定义：函数的类型由`参数列表`和`返回值列表`决定，与函数名是否相同无关
+
+```go
+type fn func(int, int) (int, int)
+func fn1(a, b int) (int, int) {
+	return a, b
+}
+func fn2(c, d int) (int, int) {
+	return c, d
+}
+// fn1 和 fn2 函数类型是一样的
+```
+
+* 匿名函数：直接赋值给变量
+
+```go
+f1 := func(a, b int) int {
+	return a + b
+}
+fmt.Println(f1(1, 2)) // 3
+```
+
+* 立即执行函数
+
+```go
+func(a, b int) {
+	fmt.Println(a + b) // 3
+}(1, 2)
+```
+
+* 闭包：本质上闭包也是函数，内部函数补货外部函数作用域中的变量，被捕获的变量和函数会一起存在
+
+```go
+func incrementor() func() int {
+	count := 0
+	return func() int {
+		count++
+		return count
+	}
+}
+
+next := incrementor()
+fmt.Println(next()) // 1
+fmt.Println(next()) // 2
+```
 
 ## 接口类型
-### 接口
+
+### 接口（interface）
+
+go接口设计是非侵入式的，他是一组`行为`的抽象，即签名，而不是实现
+
+* 定义与使用
+
+```go
+type Animal interface {
+	Sound()
+}
+type Dog struct {
+	Name string
+}
+func (d Dog) Sound() {
+	fmt.Printf("%s的叫声是%s", d.Name, "汪汪")
+}
+type Cat struct {
+	Name string
+}
+func (c Cat) Sound() {
+	fmt.Printf("%s的叫声是%s", c.Name, "喵喵")
+}
+
+// main 函数逻辑
+dog := Dog{
+	Name: "狗狗",
+}
+dog.Sound() // 狗狗的叫声是汪汪
+```
+
+* 空接口：`Go 1.18`后引入`any`作为`interface{}`别名
