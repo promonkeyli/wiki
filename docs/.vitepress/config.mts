@@ -92,6 +92,14 @@ export default defineConfig({
                     {
                       text: "数据类型",
                       link: "/backend/go/basic/type"
+                    },
+                    {
+                      text: "条件语句",
+                      link: "/backend/go/basic/if"
+                    },
+                    {
+                      text: "循环语句",
+                      link: "/backend/go/basic/loop"
                     }
                   ]
               }
