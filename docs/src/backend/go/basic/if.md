@@ -5,7 +5,9 @@ title: golang 条件语句
 
 go 中有三种条件语句，`if`、`switch`、`select`，使用方式如下：
 
-* `if` 语句：go中if语句不需要小括号（），但是需要大括号
+## `if` 语句
+
+go中if语句不需要小括号（），但是需要大括号
 
 ```go
 // 1.基本使用
@@ -40,7 +42,9 @@ func main() {
 }
 ```
 
-* `switch`语句：go中的`switch`语句不需要每个分支后面添加`break`，执行完`case`会自动退出
+## `switch`语句
+
+go中的`switch`语句不需要每个分支后面添加`break`，执行完`case`会自动退出
 
 ```go
 // 1. 基本使用
@@ -84,7 +88,9 @@ func main() {
 }
 ```
 
-* `select`语句：go中并发编程的特殊条件语句，用于监听 `channel（通道）`的操作，它会随机选择一个可以执行的`case`
+## `select`语句
+
+go中并发编程的特殊条件语句，用于监听 `channel（通道）`的操作，它会随机选择一个可以执行的`case`
 
 ```go
 func main() {

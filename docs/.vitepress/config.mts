@@ -100,6 +100,10 @@ export default defineConfig({
                     {
                       text: "循环语句",
                       link: "/backend/go/basic/loop"
+                    },
+                    {
+                      text: "函数",
+                      link: "/backend/go/basic/func"
                     }
                   ]
               }
