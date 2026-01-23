@@ -124,16 +124,16 @@ export default defineConfig({
                           link: "/backend/go/sync/goroutine"
                       },
                       {
+                          text: "同步",
+                          link: "/backend/go/sync/sync"
+                      },
+                      {
                           text: "通道",
                           link: "/backend/go/sync/channel"
                       },
                       {
                           text: "复用",
                           link: "/backend/go/sync/select"
-                      },
-                      {
-                          text: "同步",
-                          link: "/backend/go/sync/sync"
                       },
                       {
                           text: "上下文",
