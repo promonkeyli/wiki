@@ -104,7 +104,19 @@ export default defineConfig({
                     {
                       text: "函数",
                       link: "/backend/go/basic/func"
-                    }
+                    },
+                    {
+                      text: "结构体",
+                      link: "/backend/go/basic/struct"
+                    },
+                    {
+                      text: "接口",
+                      link: "/backend/go/basic/interface"
+                    },
+                    {
+                      text: "指针",
+                      link: "/backend/go/basic/pointer"
+                    },
                   ]
               }
           ]
