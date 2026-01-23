@@ -114,7 +114,33 @@ export default defineConfig({
                       link: "/backend/go/basic/interface"
                     }
                   ]
-              }
+              },
+              {
+                  text: '并发',
+                  collapsed: true,
+                  items: [
+                      {
+                          text: "协程",
+                          link: "/backend/go/sync/goroutine"
+                      },
+                      {
+                          text: "通道",
+                          link: "/backend/go/sync/channel"
+                      },
+                      {
+                          text: "复用",
+                          link: "/backend/go/sync/select"
+                      },
+                      {
+                          text: "同步",
+                          link: "/backend/go/sync/sync"
+                      },
+                      {
+                          text: "上下文",
+                          link: "/backend/go/sync/context"
+                      },
+                  ]
+              },
           ]
         }
       ],
