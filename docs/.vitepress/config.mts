@@ -112,11 +112,7 @@ export default defineConfig({
                     {
                       text: "接口",
                       link: "/backend/go/basic/interface"
-                    },
-                    {
-                      text: "指针",
-                      link: "/backend/go/basic/pointer"
-                    },
+                    }
                   ]
               }
           ]
