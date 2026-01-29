@@ -115,7 +115,7 @@ export default defineConfig({
                     },
                     {
                       text: "泛型",
-                      link: "/backend/go/basic/"
+                      link: "/backend/go/basic/generics"
                     }
                   ]
               },
