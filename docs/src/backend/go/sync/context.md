@@ -56,8 +56,9 @@ func doHeavyWork(ctx context.Context) {
 
 	case <-ctx.Done():
 		// 2. 【管生死】监听 Context 的取消/超时信号
-		// 一旦 Context 被取消或超时，ctx.Done() 的 channel 会被关闭，这里会被触发
-		fmt.Printf("[子协程] %v 任务强制停止！停止原因: %v\n", traceID, ctx.Err())
+		// 一旦 Context 被取消或超时，ctx.Done() 的 channel 会被关闭
+		// 这里会被触发
+		fmt.Printf("[子协程] %v 强制停止！停止原因: %v\n", traceID, ctx.Err())
 
 		// 这里应该做清理工作，比如回滚事务、断开连接等
 	}

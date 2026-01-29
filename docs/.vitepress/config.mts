@@ -112,6 +112,10 @@ export default defineConfig({
                     {
                       text: "接口",
                       link: "/backend/go/basic/interface"
+                    },
+                    {
+                      text: "泛型",
+                      link: "/backend/go/basic/"
                     }
                   ]
               },
