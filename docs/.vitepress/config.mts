@@ -145,6 +145,16 @@ export default defineConfig({
                       },
                   ]
               },
+              {
+                  text: '标准库',
+                  collapsed: true,
+                  items: [
+                      {
+                          text: "总结",
+                          link: "/backend/go/library/summary"
+                      },
+                  ]
+              },
           ]
         }
       ],
